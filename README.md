@@ -30,8 +30,9 @@ With the k-means clustering algorithm, while labelled data is unnecessary, we ha
 
 On ``n_clusters = 3``, the centroid for each cluster, which is a time series representative of the cluster are shown in the following plot:
 
+![](https://raw.githubusercontent.com/chaddling/bikeshareTO_analysis/master/figures/kmeans_clusters_3.png)
 
-We can see some interesting features: the largest cluster comprise of > 60% of the stations are characterized by low traffic behaviour. The other two centroids show opposite behaviours, They distinguish groups of stations which have:
+We can see some interesting features: the largest cluster (comprises > 60% of the stations) are characterized by low traffic behaviour. The other two centroids show opposite "rush hour" behaviours, They distinguish groups of stations which have:
 
 - Peaks during morning rush/noon, troughs during evening rush/nighttime.
 - Troughs during morning rush/noon and peaks during evening rush/nighttime.
@@ -42,7 +43,11 @@ While the above plot has nice interpretation, I try to see if the cluster member
 
 The silhouette coefficient for a point is a value in [-1, 1] that measures (based on Euclidean distance) how well separated the point is to other clusters. It is depends on its intra-cluster distances to all other points within its cluster, and inter-cluster distances to points in other clusters. Silhouette coefficients (as these values are referred to as) near 1 indicate that the sample is far away from the neighboring clusters. A value of 0 indicates that the sample is on or very close to the decision boundary between two neighboring clusters and negative values indicate that those samples might have been assigned to the wrong cluster [1](https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html).
 
-From the plot, we see that ``n_clusters >= 5`` score poorer. while ``n_clusters = 2`` scores the best, we have to analyze further to see if the cluster members are well-represented by this scoring method (TBD). 
+![](https://raw.githubusercontent.com/chaddling/bikeshareTO_analysis/master/figures/silhouette_score.png)
+
+From the plot, we see that ``n_clusters >= 5`` score poorer. while ``n_clusters = 2`` scores the best, we have to analyze further to see if the cluster members are well-represented by this scoring method (TBD). Below are some plots for these cluster sizes:
+
+![](https://raw.githubusercontent.com/chaddling/bikeshareTO_analysis/master/figures/kmeans_clusters_2.png)
 
 I am weary of this result since the ``n_clusters = 3`` plot shows that the "rush hour" clusters are roughly the same in magnitude in their means and fluctuations. So, while forcing one of them to be clustered with the low-usage cluster results in a higher scoring, the scoring method is Euclidean distance-based just like the clustering method so some bias can be introduced...
 
@@ -50,11 +55,17 @@ Seasonal usage
 --------------
 The aggregating the total number of trips per hour, conditioned on the season, we can see something interesting: that in the Summer+Fall seasons peak bike usages occur at morning/evening rush hours, while in the Winter+Spring seasons the peak usages occur at noon/nighttime. 
 
+![](https://raw.githubusercontent.com/chaddling/bikeshareTO_analysis/master/figures/seasonal.png)
+
 Further separating the rush hour clusters
 -----------------------------------------
 Based on the above observation, I tried clustering again the Winter+Spring and Summer+Fall subsets of data. We can indeed separate the the rush hour and nighttime usage behaviours:
 
-Silhouette scoring rules out ``n_clusters >= 5``. Again, ``n_clusters = 2`` gives the best scoring. I'll show the ``n_clusters = 3`` plots below
+![](https://raw.githubusercontent.com/chaddling/bikeshareTO_analysis/master/figures/kmeans_clusters_3_winter_spring.png)
+
+![](https://raw.githubusercontent.com/chaddling/bikeshareTO_analysis/master/figures/kmeans_clusters_3_summer_fall.png)
+
+Silhouette scoring from above rules out ``n_clusters >= 5``. Again, ``n_clusters = 2`` gives the best scoring. The scoring for 3 to 4 clusters however ranges from ~ 0.44-0.5.
 
 Extra plots not shown here are collected in the ``figures`` folder.
 
