@@ -71,7 +71,7 @@ Extra plots not shown here are collected in the ``figures`` folder.
 
 Summary and future work
 =======================
-- Further analyze the quality of cluster assignments and scoring metric (TBD).
+- Further analyze the quality of cluster assignments (bootstrapping?) and scoring metric (TBD).
 - The <u>main insight</u> of this analysis shows that difference in seasonal usage accounts for a change in behaviour of the traffic in heavily-used bike share stations.
 - By using the full time series (rather than taking averages), the feature vectors will encode the seasonal differences. This can allow us to see if some stations change their behaviours (from rush hour peak traffic to nighttime peak traffic) depending on the time of the year. Of course, this means that the feature vector will be much higher dimension...
 - Does clustering in temporal behaviour translate to clustering in space? i.e. stations that are belong in the same clusters are also located close to each other in the city.
